@@ -25,7 +25,8 @@
 
 
 Создаём нового пользователя для нашей бд
-- GRANT ALL ON delivery_bd.* TO 'deliveryuser'@'%' IDENTIFIED BY '123';
+- ALTER USER 'delivery_user'@'%' IDENTIFIED BY '123';
+- GRANT ALL ON delivery_bd.* TO 'delivery_user'@'%';
 
 Обновите привилегии, чтобы уведомить сервер MySQL об изменениях:
 - FLUSH PRIVILEGES;
