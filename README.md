@@ -35,3 +35,6 @@
 
 Выйдите из контейнера:
 - exit
+
+Проводим миграции
+- docker-compose exec app php artisan migrate
