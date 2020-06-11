@@ -25,12 +25,15 @@ RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --wi
 RUN docker-php-ext-install gd
 
 # Copy existing application directory contents
-COPY ./src /var/www
+COPY . /var/www
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install
 
+RUN chown -R www-data:www-data /var/www
+
+RUN chmod -R 755 /var/www/storage
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000

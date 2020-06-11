@@ -1,11 +1,7 @@
-
-Скопируйте файл .env.example в папке src, укажите ему имя .env
+Скопируйте файл .env.example в папке docker/image/php, укажите ему имя .env
 
 Собираем и запускаем контейнеры
 - docker-compose up -d
-
-Проводим установку зависимостей
-- docker-compose exec app composer install
 
 Следующая команда будет генерировать ключ и скопирует его в файл .env, 
 гарантируя безопасность сеансов пользователя и шифрованных данных:
@@ -24,7 +20,7 @@
 - mysql -u root -p
 
 
-Создаём нового пользователя для нашей бд
+Создаём нового пользователя для нашей бд и задаём ему права
 - ALTER USER 'delivery_user'@'%' IDENTIFIED BY '123';
 - GRANT ALL ON delivery_bd.* TO 'delivery_user'@'%';
 
