@@ -1,0 +1,411 @@
+openapi: 3.0.0
+info:
+  description: |
+    Описание
+  version: 1.0.0
+  title: Delivery App API
+  contact:
+    name: API Support
+    email: asheymaer@axeta.ru
+tags:
+  - name: product
+    description: Описание операций с продуктами
+  - name: order
+    description: Описание операций с заказами
+  - name: cart
+    description: Описание операций с корзиной
+  - name: user
+    description: Описание операций с пользователями
+x-tagGroups:
+  - name: General
+    tags:
+      - product
+      - order
+      - cart
+  - name: User Management
+    tags:
+      - user
+paths:
+  /api/login:
+    post:
+      tags:
+        - user
+      summary: Авторизация
+      description: Авторизация пользователя в приложении
+      operationId: login
+      responses:
+        '200':
+          description: Успешная авторизация
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token_type:
+                    type: string
+                    example: 'Bearer'
+                  token:
+                    type: string
+                    example: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNzczOGYxYzQ5ZWUzMWEyYmQxMjM2MDE1ZTg0OGFiMGZkMWEyOTg3ZDNjNmMxYzVjOWQ2NjlhN2QzNzAzN2EyZjVlNzIzMWRlNmEyZjQ0MjgiLCJpYXQiOjE1OTIyOTE1MjksIm5iZiI6MTU5MjI5MTUyOSwiZXhwIjoxNjIzODI3NTI5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.UC1-cCdAHzgh_zl7v6Zquf-cEEM_3zDq9_3ya_7kHvjEzEkGy9TFMG0_QAbQtJKx51twbL6XQJOPIQJVhuI5gKtR05Q1Yie-s63QyYtKVA7obwHMv2gP0TVOtppgPbdadnL3YwVBOCXL4CtcN9joXhQ_YK1I-4z_u7q7g48hmlp_WFd8YN_HHSEEiCSHU22jbn-LHXD5wj0iTPqvtHxd5p4zpZ6191ShNpWzVXXbRY8tHgMMXABvFnTG1oLshHnntzlHQyCSmlnED_lLKZTtPN4jBNVP82MSYsqfHcpv40dChfNjtA73gr9COcjS3-_xAcrSWoeJDgSI7F1whxz3AUPPycjGDXUS1eOZ1VwqCvSGWI1r2vhKPYIhHSyN3MFu3UoZDMGSZ5xJTTnUZzOGfXf302pNAO308o_BHthgQp8reBG9ODRLz4LLkRuAdtWwZPU7vC7SJXsvtFQvu6U44bOp6Aqm5IaDh2dNuzsRbjMeuxiS8EzPuwrP-pgoQK5E_U1xolTBkIcfiotQw5irRyDhQijwRgYEhgYVxnmJrsiI-vCARrx0pL_OvTyawBeI5JvNlc4LMa9Xv5qP1IzeXGfzkQVLsTas2HS5-UXIdet7oA5zYLO4Cpg9k3haYyUWP9Re4fRilxIDRst9xwt0EKPZdKRufZJ3s5XeBAuTqSI'
+                  expires_at:
+                    type: string
+                    example: '2020-06-17 07:12:10'
+        '401':
+          description: Неверные данные
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: Email пользователя
+                  type: string
+                  example: 'asheymaer@axeta.ru'
+                password:
+                  description: Пароль пользователя
+                  type: string
+                  example: '123456'
+        required: true
+  '/api/register':
+    post:
+      tags:
+        - user
+      summary: Регистрация
+      description: Регистрация пользователя в приложении
+      operationId: register
+      responses:
+        '200':
+          description: Успешная регистрация
+        '422':
+          description: Неверные данные
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Имя пользователя
+                  type: string
+                  example: 'asheymaer'
+                email:
+                  description: Email пользователя
+                  type: string
+                  example: 'asheymaer@axeta.ru'
+                password:
+                  description: Пароль пользователя
+                  type: string
+                  example: '123456'
+                password_confirmation:
+                  description: Подтверждение пароля
+                  type: string
+                  example: '123456'
+                phone:
+                  description: Телефон пользователя
+                  type: string
+                  example: '+79146755783'
+        required: true
+  '/api/logout':
+    post:
+      tags:
+        - user
+      summary: Выход из приложения
+      description: Выход из приложения
+      operationId: logout
+      parameters:
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный выход
+  /api/products:
+    get:
+      tags:
+        - product
+      summary: Список продуктов
+      description: Получить список всех продуктов
+      operationId: getProducts
+      parameters:
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешная операция
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags:
+        - product
+      summary: Добавление продукта
+      description: Добавление нового продукта
+      operationId: addProduct
+      parameters:
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  description: Имя продукта
+                  type: string
+                  example: 'Имя продукта'
+                price:
+                  description: Цена продукта
+                  type: integer
+                  example: 1000
+                image:
+                  description: Изображение продукта
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        '200':
+          description: Успешное добавление продукта
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '422':
+          description: Неверные данные
+  /api/orders:
+    get:
+      tags:
+        - order
+      summary: Список заказов
+      description: Получить список всех заказов пользователя
+      operationId: getOrders
+      parameters:
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешная операция
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+  /api/create-order:
+    post:
+      tags:
+        - order
+      summary: Создание заказа
+      description: Создание заказа
+      operationId: createOrder
+      parameters:
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  description: Список ID продуктов
+                  type: array
+                  example: [1,2]
+                address:
+                  description: Адресс доставки
+                  type: string
+                  example: 'г. Москва ул. Пушкина 35 кв. 401'
+        required: true
+      responses:
+        '200':
+          description: Успешное создание заказа
+  /api/order/{id}:
+    get:
+      tags:
+        - order
+      summary: Получение заказа
+      description: Получение конкретного заказа по ID
+      operationId: getOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID заказа
+          schema:
+            type: string
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное получение заказа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order_One'
+  /api/cart-products:
+    get:
+      tags:
+        - cart
+      summary: Список продуктов в корзине
+      description: Получение списка продуктов в корзине пользователя
+      operationId: getCartProducts
+      parameters:
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное получение списка продуктов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+  /api/add-to-cart/{id}/{num}:
+    post:
+      tags:
+        - cart
+      summary: Добавление продукта в корзину
+      description: Добавление продукта в корзину
+      operationId: addProductToCart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID продукта
+          schema:
+            type: string
+        - name: num
+          in: path
+          required: true
+          description: Кол-во добавляемых продуктов
+          schema:
+            type: string
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное добавление продукта в корзину
+  /api/remove-from-cart/{id}:
+    post:
+      tags:
+        - cart
+      summary: Удаление продукта из корзины
+      description: Удаление продукта из корзины
+      operationId: removeProductFromCart
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID продукта
+          schema:
+            type: string
+        - name: Bearer
+          in: header
+          required: true
+          description: Токен полученный при авторизации
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешное удаление продукта из корзины
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          description: ID продукта
+          type: integer
+          example: 1
+        name:
+          description: Имя продукта
+          type: string
+          example: 'Имя продукта'
+        image:
+          description: Путь до изображения продукта
+          type: string
+          example: 'images/1592300156.jpeg'
+        price:
+          description: Цена продукта
+          type: string
+          example: 1000000
+    Order:
+      type: object
+      properties:
+        id:
+          description: ID заказа
+          type: integer
+        user_id:
+          description: ID пользователя
+          type: integer
+        status:
+          description: Статус заказа
+          type: integer
+        address:
+          description: Адресс заказа
+          type: string
+        product_ids:
+          description: Список ID продуктов
+          type: string
+    Order_One:
+      type: object
+      properties:
+        id:
+          description: ID заказа
+          type: integer
+        user_id:
+          description: ID пользователя
+          type: integer
+        status:
+          description: Статус заказа
+          type: integer
+        address:
+          description: Адресс заказа
+          type: string
+        products:
+          description: Список продуктов
+          type: array
+          $ref: '#/components/schemas/Product'
+  securitySchemes:
+    Bearer Token:
+      description: >
+        Для доступа используется Bearer Token получаемый при авторизации пользователя
+      type: apiKey
+      name: Bearer
+      in: header

@@ -1,3 +1,5 @@
+Для сборки используется Docker
+
 Скопируйте файл .env.example в папке docker/image/php, укажите ему имя .env
 
 Собираем и запускаем контейнеры
@@ -35,3 +37,9 @@
 
 Проводим миграции
 - docker-compose exec app php artisan migrate
+
+Установка Laravel Passport
+- docker-compose exec app php artisan passport:install
+
+API документация находится по адресу 
+{server}/redoc
