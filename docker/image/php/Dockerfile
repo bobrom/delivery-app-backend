@@ -25,11 +25,11 @@ RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --wi
 RUN docker-php-ext-install gd
 
 # Copy existing application directory contents
-RUN ls -la
 COPY . /var/www
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN ls -la
 RUN composer install
 
 RUN chown -R www-data:www-data /var/www
