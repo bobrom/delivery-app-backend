@@ -1,0 +1,31 @@
+kind: pipeline
+type: docker
+name: presales/delivery-app-backend:staging
+
+steps:
+  - name: build-and-push-to-registry
+    image: plugins/docker
+    commands:
+    settings:
+      debug: true
+      dockerfile: docker/image/php/Dockerfile
+      username:
+        from_secret: docker_hub_username
+      password:
+        from_secret: docker_hub_password
+      repo: hub.docker.axeta.ru/presales/delivery-app-backend
+      registry: hub.docker.axeta.ru
+      tags: staging
+  - name: trigger-deployment
+    image: plugins/webhook
+    commands:
+    settings:
+      urls: http://webhook.axetacloud.ru/hooks/presales.delivery-app-backend.staging
+      username:
+        from_secret: cloud_webhook_username
+      password:
+        from_secret: cloud_webhook_password
+
+trigger:
+  branch:
+    - master
