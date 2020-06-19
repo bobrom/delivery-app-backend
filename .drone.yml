@@ -9,6 +9,7 @@ steps:
     settings:
       debug: true
       context: docker/image/php
+      dockerfile: docker/image/php/Dockerfile
       username:
         from_secret: docker_hub_username
       password:
