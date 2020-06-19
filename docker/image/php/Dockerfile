@@ -29,7 +29,6 @@ COPY . /var/www
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN ls -la
 RUN composer install
 
 RUN chown -R www-data:www-data /var/www
