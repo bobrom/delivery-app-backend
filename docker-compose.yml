@@ -16,7 +16,6 @@ services:
     volumes:
       - ./docker/etc/php/local.ini:/usr/local/etc/php/conf.d/local.ini
       - ./docker/data/images:/var/www/public/images
-      - ./docker/data/redoc:/var/www/public/redoc
     networks:
       - app-network
 
@@ -30,9 +29,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./docker/image/php/:/var/www/
+      - ./docker/image/php/public/index.php:/var/www/public/index.php
+      - ./docker/data/redoc/:/var/www/public/redoc/
       - ./docker/etc/nginx/conf.d/:/etc/nginx/conf.d/
-      - ./docker/data/redoc:/var/www/public/redoc
     networks:
       - app-network
 
