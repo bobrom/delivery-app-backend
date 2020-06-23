@@ -30,7 +30,7 @@ services:
       - "443:443"
     volumes:
       - ./docker/image/php/public/index.php:/var/www/public/index.php
-      - ./docker/data/redoc/:/var/www/public/redoc/
+      - ./docker/image/php/public/redoc:/var/www/public/redoc
       - ./docker/etc/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network

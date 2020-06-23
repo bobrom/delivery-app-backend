@@ -5,6 +5,7 @@
 /vendor
 /.expo
 /.idea
+/docker/data/images/*
 .editorconfig
 .env
 .env.backup
