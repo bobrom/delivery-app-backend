@@ -35,6 +35,12 @@ RUN chown -R www-data:www-data /var/www
 
 RUN chmod -R 755 /var/www/storage
 
+ADD startup.sh /startup
+RUN chmod +x /startup
+
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-CMD ["php-fpm"]
+ADD startup.sh /usr/local/bin/docker-php-entrypoint
+RUN chmod +x /usr/local/bin/docker-php-entrypoint
+
+CMD ["startup.sh"]

@@ -21,7 +21,6 @@
 Выполните внутри контейнера вход в административную учетную запись MySQL root (Пароль указан в файле docker-compose)
 - mysql -u root -p
 
-
 Создаём нового пользователя для нашей бд и задаём ему права
 - ALTER USER 'delivery_user'@'%' IDENTIFIED BY '123';
 - GRANT ALL ON delivery_bd.* TO 'delivery_user'@'%';
@@ -35,10 +34,7 @@
 Выйдите из контейнера:
 - exit
 
-Проводим миграции
-- docker-compose exec app php artisan migrate
-
-Установка Laravel Passport
+Добавление ключей в БД для Laravel Passport
 - docker-compose exec app php artisan passport:install
 
 API документация находится по адресу 
