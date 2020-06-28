@@ -40,7 +40,10 @@ RUN chmod +x /startup
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
-ADD startup.sh /usr/local/bin/docker-php-entrypoint
-RUN chmod +x /usr/local/bin/docker-php-entrypoint
 
-CMD ["startup.sh"]
+# Add custom entrypoint
+RUN mv "startup.sh" "/usr/local/bin/custom-entrypoint.sh"
+RUN chmod +x /usr/local/bin/custom-entrypoint.sh
+
+ENTRYPOINT ["custom-entrypoint.sh", "docker-php-entrypoint"]
+CMD ["php-fpm"]
