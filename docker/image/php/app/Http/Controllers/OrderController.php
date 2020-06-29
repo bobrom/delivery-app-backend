@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Http\Requests\OrderRequest;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -12,9 +13,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Order::all());
+        $orders = Order::find(['user_id' => $request->user()->id])->all();
+        return response()->json($orders);
     }
 
     /**
