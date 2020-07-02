@@ -35,6 +35,8 @@ RUN chown -R www-data:www-data /var/www
 
 RUN chmod -R 755 /var/www/storage
 
+RUN chmod -R 600 /var/www/storage/oauth-*.key
+
 ADD startup.sh /startup
 RUN chmod +x /startup
 
