@@ -26,7 +26,18 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('login', 'LoginController');
         Route::post('logout', 'LogoutController')->middleware('auth:api');
     });
+    Route::group([
+        'namespace' => 'Auth',
+        'middleware' => 'api',
+        'prefix' => 'password'
+    ], function () {
+        Route::post('create', 'PasswordResetController@create');
+        Route::get('find/{token}', 'PasswordResetController@find');
+        Route::post('reset', 'PasswordResetController@reset');
+    });
 });
+
+
 
 Route::apiResource('/products', 'ProductController');
 Route::apiResource('/orders', 'OrderController');
