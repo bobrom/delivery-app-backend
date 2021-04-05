@@ -6,6 +6,7 @@
 /.expo
 /.idea
 /docker/data/images/*
+/docker/data/storage/*
 .editorconfig
 .env
 .env.backup

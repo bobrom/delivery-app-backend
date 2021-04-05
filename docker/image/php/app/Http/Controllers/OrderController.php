@@ -15,7 +15,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::find(['user_id' => $request->user()->id])->all();
+        $orders = Order::where(['user_id' => auth('api')->user()->id])->get()->all();
         return response()->json($orders);
     }
 
@@ -66,6 +66,6 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::findOrFail($id);
-        if($order->delete()) return response(null, 204);
+        if ($order->delete()) return response(null, 204);
     }
 }

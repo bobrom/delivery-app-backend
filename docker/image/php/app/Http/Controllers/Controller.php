@@ -85,6 +85,7 @@ class Controller extends BaseController
         $order->save();
         $request->user()->cart_products = '';
         $request->user()->update();
+        return response()->json(config('mail.to'));
         Mail::to(config('mail.to'))->send(new OrderCreated($order));
         return response()->json($order);
     }

@@ -17,6 +17,7 @@ services:
       - ./docker/etc/php/local.ini:/usr/local/etc/php/conf.d/local.ini
       - ./docker/data/images:/var/www/public/images
       - ./docker/data/storage:/var/www/storage
+      - ./docker/image/php/app:/var/www/app
     networks:
       - app-network
 
@@ -27,7 +28,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "80:80"
+      - "81:80"
       - "443:443"
     volumes:
       - ./docker/image/php/public/index.php:/var/www/public/index.php
